@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rust Kit Command Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, button {
+      margin-top: 5px;
+      padding: 8px;
+      width: 100%;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rust Kit Command Generator</h1>
+  <form id="kitForm">
+    <label for="kitName">Kit Name:</label>
+    <input type="text" id="kitName" placeholder="Enter kit name" required>
+
+    <label for="itemShortName">Item Short Name:</label>
+    <select id="itemShortName">
+      <option value="ammo.pistol">Ammo - Pistol</option>
+      <option value="wood">Wood</option>
+      <option value="metal.fragments">Metal Fragments</option>
+      <!-- Add more items as needed -->
+    </select>
+
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount" required>
+
+    <label for="condition">Condition (0-100):</label>
+    <input type="number" id="condition" placeholder="Enter condition" min="0" max="100" required>
+
+    <label for="container">Container:</label>
+    <select id="container">
+      <option value="belt">Belt</option>
+      <option value="main">Main Inventory</option>
+      <option value="wear">Wear</option>
+      <!-- Add more containers as needed -->
+    </select>
+
+    <button type="button" id="generateBtn">Generate Command</button>
+  </form>
+
+  <div class="output" id="commandOutput">Your command will appear here.</div>
+
+  <script>
+    document.getElementById('generateBtn').addEventListener('click', () => {
+      const kitName = document.getElementById('kitName').value.trim();
+      const itemShortName = document.getElementById('itemShortName').value;
+      const amount = document.getElementById('amount').value;
+      const condition = document.getElementById('condition').value;
+      const container = document.getElementById('container').value;
+
+      if (!kitName || !amount || !condition) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const command = `kit add ${kitName} ${itemShortName} ${amount} ${condition} ${container}`;
+      document.getElementById('commandOutput').textContent = command;
+    });
+  </script>
+</body>
+</html>
