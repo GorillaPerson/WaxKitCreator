@@ -163,15 +163,15 @@
         <input type="text" id="itemInput" placeholder="Search and select an item">
         <div class="dropdown-list" id="itemDropdown">
           <div class="dropdown-item" data-value="ammo.pistol">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/ammo.pistol.png" alt="Ammo - Pistol">
+            <img src="" alt="Ammo - Pistol" class="item-image">
             Ammo - Pistol
           </div>
           <div class="dropdown-item" data-value="wood">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/wood.png" alt="Wood">
+            <img src="" alt="Wood" class="item-image">
             Wood
           </div>
           <div class="dropdown-item" data-value="metal.fragments">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/metal.fragments.png" alt="Metal Fragments">
+            <img src="" alt="Metal Fragments" class="item-image">
             Metal Fragments
           </div>
         </div>
@@ -227,7 +227,7 @@
       commandText.textContent = command;
       commandText.className = 'command-text';
 
-      // Add item image
+      // Add item image dynamically using the item name
       const itemImage = document.createElement('img');
       itemImage.src = `https://gorillaperson.github.io/WaxKitCreator/images/${item}.png`;
       itemImage.alt = item;
