@@ -8,8 +8,8 @@
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
-      background-color: #1e1e1e; /* Dark Grey Background */
-      color: #ffffff; /* White Text */
+      background-color: #1e1e1e;
+      color: #ffffff;
       line-height: 1.5;
     }
     h1 {
@@ -20,7 +20,7 @@
       max-width: 500px;
       margin: 0 auto;
       padding: 20px;
-      background-color: #2c2c2c; /* Slightly lighter grey for form container */
+      background-color: #2c2c2c;
       border-radius: 8px;
       box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -38,18 +38,6 @@
       background-color: #333;
       color: #fff;
       box-sizing: border-box;
-    }
-    input::placeholder {
-      color: #bbbbbb;
-    }
-    button {
-      background-color: #444;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #555;
     }
     .dropdown {
       position: relative;
@@ -75,6 +63,13 @@
       padding: 10px;
       cursor: pointer;
       transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    .dropdown .dropdown-list .dropdown-item img {
+      margin-right: 10px;
+      width: 24px;
+      height: 24px;
     }
     .dropdown .dropdown-list .dropdown-item:hover {
       background-color: #444;
@@ -109,24 +104,6 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .command-item button.copy {
-      background-color: #4466aa;
-    }
-    .command-item button.copy:hover {
-      background-color: #5588cc;
-    }
-    .command-item button.edit {
-      background-color: #44aa44;
-    }
-    .command-item button.edit:hover {
-      background-color: #55cc55;
-    }
-    .command-item button.remove {
-      background-color: #aa4444;
-    }
-    .command-item button.remove:hover {
-      background-color: #cc5555;
-    }
     .copy-all {
       display: block;
       margin: 20px auto;
@@ -155,10 +132,16 @@
       <div class="dropdown">
         <input type="text" id="itemInput" placeholder="Search and select an item">
         <div class="dropdown-list" id="itemDropdown">
-          <div class="dropdown-item" data-value="ammo.pistol">Ammo - Pistol</div>
-          <div class="dropdown-item" data-value="wood">Wood</div>
-          <div class="dropdown-item" data-value="metal.fragments">Metal Fragments</div>
-          <!-- Add more items as needed -->
+          <div class="dropdown-item" data-value="ammo.pistol">
+            <img src="https://wiki.rustclash.com/img/items180/ammo.pistol.png" alt="Pistol Ammo">Ammo - Pistol
+          </div>
+          <div class="dropdown-item" data-value="wood">
+            <img src="https://wiki.rustclash.com/img/items180/wood.png" alt="Wood">Wood
+          </div>
+          <div class="dropdown-item" data-value="metal.fragments">
+            <img src="https://wiki.rustclash.com/img/items180/metal.fragments.png" alt="Metal Fragment">Metal Fragments
+          </div>
+          <!-- Add more items with images as needed -->
         </div>
       </div>
 
@@ -173,7 +156,6 @@
         <option value="belt">Belt</option>
         <option value="main">Main Inventory</option>
         <option value="wear">Wear</option>
-        <!-- Add more containers as needed -->
       </select>
 
       <button type="button" id="addBtn">Add Command</button>
@@ -205,7 +187,7 @@
       }
     };
 
-    const createCommandElement = (command) => {
+    const createCommandElement = (command, itemImageUrl) => {
       const commandItem = document.createElement('div');
       commandItem.className = 'command-item';
 
@@ -213,10 +195,18 @@
       commandText.textContent = command;
       commandText.className = 'command-text';
 
+      const img = document.createElement('img');
+      img.src = itemImageUrl;
+      img.alt = 'Item Image';
+      img.style.width = '24px';
+      img.style.height = '24px';
+      img.style.marginRight = '10px';
+
+      commandItem.insertBefore(img, commandText);
+
       const actions = document.createElement('div');
       actions.className = 'command-actions';
 
-      // Copy Button
       const copyBtn = document.createElement('button');
       copyBtn.textContent = 'Copy';
       copyBtn.className = 'copy';
@@ -225,7 +215,6 @@
         alert('Command copied to clipboard!');
       });
 
-      // Edit Button
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
       editBtn.className = 'edit';
@@ -240,7 +229,6 @@
         showEmptyMessage();
       });
 
-      // Remove Button
       const removeBtn = document.createElement('button');
       removeBtn.textContent = 'Remove';
       removeBtn.className = 'remove';
@@ -252,7 +240,6 @@
       actions.appendChild(copyBtn);
       actions.appendChild(editBtn);
       actions.appendChild(removeBtn);
-      commandItem.appendChild(commandText);
       commandItem.appendChild(actions);
 
       return commandItem;
@@ -265,20 +252,15 @@
       const condition = document.getElementById('condition').value;
       const container = document.getElementById('container').value;
 
-      // Validate condition is between 0 and 1
-      if (condition < 0 || condition > 1) {
-        alert('Condition must be between 0 and 1.');
-        return;
-      }
-
       if (!kitName || !item || !amount || condition === '') {
         alert('Please fill in all fields.');
         return;
       }
 
+      const itemImageUrl = `https://wiki.rustclash.com/img/items180/${item}.png`; // Match with image name
       const command = `kit add ${kitName} ${item} ${amount} ${condition} ${container}`;
       clearEmptyMessage();
-      const commandElement = createCommandElement(command);
+      const commandElement = createCommandElement(command, itemImageUrl);
       commandList.appendChild(commandElement);
     });
 
@@ -292,7 +274,6 @@
       }
     });
 
-    // Filter items in the dropdown as the user types
     itemInput.addEventListener('input', () => {
       const filter = itemInput.value.toLowerCase();
       const options = Array.from(itemDropdown.querySelectorAll('.dropdown-item'));
@@ -308,7 +289,6 @@
       itemDropdown.style.display = anyVisible ? 'block' : 'none';
     });
 
-    // Select item from the dropdown
     itemDropdown.addEventListener('click', (e) => {
       if (e.target.classList.contains('dropdown-item')) {
         itemInput.value = e.target.textContent;
@@ -317,7 +297,6 @@
       }
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.dropdown')) {
         itemDropdown.style.display = 'none';
