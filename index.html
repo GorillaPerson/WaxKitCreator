@@ -123,11 +123,8 @@
       <label for="kitName">Kit Name:</label>
       <input type="text" id="kitName" placeholder="Enter kit name" required>
 
-      <label for="itemSearch">Search Items:</label>
-      <input type="text" id="itemSearch" placeholder="Search items...">
-
       <label for="item">Item:</label>
-      <select id="item">
+      <select id="item" class="searchable">
         <option value="ammo.pistol">Ammo - Pistol</option>
         <option value="wood">Wood</option>
         <option value="metal.fragments">Metal Fragments</option>
@@ -164,7 +161,6 @@
     const commandList = document.getElementById('commandList');
     const emptyMessage = document.getElementById('emptyMessage');
     const copyAllBtn = document.getElementById('copyAllBtn');
-    const itemSearch = document.getElementById('itemSearch');
     const itemSelect = document.getElementById('item');
 
     const clearEmptyMessage = () => {
@@ -264,9 +260,9 @@
       }
     });
 
-    // Filter items in the dropdown based on search
-    itemSearch.addEventListener('input', () => {
-      const filter = itemSearch.value.toLowerCase();
+    // Filter items in the dropdown as the user types
+    itemSelect.addEventListener('input', () => {
+      const filter = itemSelect.value.toLowerCase();
       const options = Array.from(itemSelect.options);
       options.forEach(option => {
         if (option.textContent.toLowerCase().includes(filter)) {
