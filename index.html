@@ -166,73 +166,24 @@
             <img src="https://gorillaperson.github.io/WaxKitCreator/images/ammo.pistol.png" alt="Ammo - Pistol">
             Ammo - Pistol
           </div>
-          <div class="dropdown-item" data-value="bone.club">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/bone.club.png" alt="Bone Club">
-            Bone Club
-          </div>
-          <div class="dropdown-item" data-value="bow.compound">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/bow.compound.png" alt="Compound Bow">
-            Compound Bow
-          </div>
-          <div class="dropdown-item" data-value="crossbow">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/crossbow.png" alt="Crossbow">
-            Crossbow
-          </div>
-          <div class="dropdown-item" data-value="grenade.beancan">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/grenade.beancan.png" alt="Grenade - Beancan">
-            Grenade - Beancan
-          </div>
-          <div class="dropdown-item" data-value="grenade.f1">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/grenade.f1.png" alt="Grenade - F1">
-            Grenade - F1
-          </div>
-          <div class="dropdown-item" data-value="knife.bone">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/knife.bone.png" alt="Bone Knife">
-            Bone Knife
-          </div>
-          <div class="dropdown-item" data-value="knife.combat">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/knife.combat.png" alt="Combat Knife">
-            Combat Knife
+          <div class="dropdown-item" data-value="wood">
+            <img src="https://gorillaperson.github.io/WaxKitCreator/images/wood.png" alt="Wood">
+            Wood
           </div>
           <div class="dropdown-item" data-value="metal.fragments">
             <img src="https://gorillaperson.github.io/WaxKitCreator/images/metal.fragments.png" alt="Metal Fragments">
             Metal Fragments
           </div>
-          <div class="dropdown-item" data-value="pistol.eoka">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/pistol.eoka.png" alt="Pistol - Eoka">
-            Pistol - Eoka
-          </div>
           <div class="dropdown-item" data-value="rifle.ak">
             <img src="https://gorillaperson.github.io/WaxKitCreator/images/rifle.ak.png" alt="Rifle - AK">
             Rifle - AK
           </div>
-          <div class="dropdown-item" data-value="rifle.bolt">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/rifle.bolt.png" alt="Rifle - Bolt">
-            Rifle - Bolt
-          </div>
-          <div class="dropdown-item" data-value="shotgun.double">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/shotgun.double.png" alt="Shotgun - Double">
-            Shotgun - Double
-          </div>
-          <div class="dropdown-item" data-value="smg.2">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/smg.2.png" alt="SMG - 2">
-            SMG - 2
-          </div>
-          <div class="dropdown-item" data-value="weapon.mod.extendedmags">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/weapon.mod.extendedmags.png" alt="Weapon Mod - Extended Mags">
-            Weapon Mod - Extended Mags
-          </div>
-          <div class="dropdown-item" data-value="weapon.mod.small.scope">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/weapon.mod.small.scope.png" alt="Weapon Mod - Small Scope">
-            Weapon Mod - Small Scope
-          </div>
-          <div class="dropdown-item" data-value="wood">
-            <img src="https://gorillaperson.github.io/WaxKitCreator/images/wood.png" alt="Wood">
-            Wood
+          <div class="dropdown-item" data-value="grenade.beancan">
+            <img src="https://gorillaperson.github.io/WaxKitCreator/images/grenade.beancan.png" alt="Grenade - Beancan">
+            Grenade - Beancan
           </div>
         </div>
       </div>
-
 
       <label for="amount">Amount:</label>
       <input type="number" id="amount" placeholder="Enter amount" required>
@@ -286,7 +237,7 @@
 
       // Add item image dynamically using the short item name
       const itemImage = document.createElement('img');
-      itemImage.src = https://gorillaperson.github.io/WaxKitCreator/images/${item}.png;
+      itemImage.src = `https://gorillaperson.github.io/WaxKitCreator/images/${item}.png`;
       itemImage.alt = item;
       itemImage.style.width = '30px';
       itemImage.style.height = '30px';
@@ -333,7 +284,7 @@
         return;
       }
 
-      const command = kit add ${kitName} ${item} ${amount} ${condition} ${container};
+      const command = `kit add ${kitName} ${item} ${amount} ${condition} ${container}`;
       clearEmptyMessage();
 
       const commandElement = createCommandElement(command, item);
