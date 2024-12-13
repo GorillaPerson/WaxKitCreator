@@ -5,120 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rust Kit Command Generator</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #1e1e1e;
-      color: #ffffff;
-      line-height: 1.5;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .form-container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #2c2c2c;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-    input, button, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #555;
-      border-radius: 5px;
-      background-color: #333;
-      color: #fff;
-      box-sizing: border-box;
-    }
-    .dropdown {
-      position: relative;
-      margin-bottom: 15px;
-    }
-    .dropdown input {
-      width: 100%;
-    }
-    .dropdown .dropdown-list {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      max-height: 150px;
-      overflow-y: auto;
-      background-color: #2c2c2c;
-      border: 1px solid #555;
-      border-radius: 5px;
-      z-index: 1000;
-      display: none;
-    }
-    .dropdown .dropdown-list .dropdown-item {
-      padding: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      display: flex;
-      align-items: center;
-    }
-    .dropdown .dropdown-list .dropdown-item img {
-      margin-right: 10px;
-      width: 24px;
-      height: 24px;
-    }
-    .dropdown .dropdown-list .dropdown-item:hover {
-      background-color: #444;
-    }
-    .command-list {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 5px;
-      background-color: #2c2c2c;
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    .command-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #555;
-      border-radius: 5px;
-      background-color: #333;
-      color: #fff;
-    }
-    .command-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .command-item button {
-      width: auto;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .copy-all {
-      display: block;
-      margin: 20px auto;
-      padding: 10px;
-      background-color: #4466aa;
-      color: #fff;
-      text-align: center;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      width: fit-content;
-    }
-    .copy-all:hover {
-      background-color: #5588cc;
-    }
+    /* Your styles here */
   </style>
 </head>
 <body>
@@ -141,7 +28,6 @@
           <div class="dropdown-item" data-value="metal.fragments">
             <img src="https://gorillaperson.github.io/WaxKitCreator/images/metal.fragments.png" alt="Metal Fragments">Metal Fragments
           </div>
-          <!-- Add more items with images as needed -->
         </div>
       </div>
 
@@ -170,6 +56,7 @@
   <button class="copy-all" id="copyAllBtn">Copy All Commands</button>
 
   <script>
+    // Getting all the necessary elements
     const addBtn = document.getElementById('addBtn');
     const commandList = document.getElementById('commandList');
     const emptyMessage = document.getElementById('emptyMessage');
@@ -187,6 +74,7 @@
       }
     };
 
+    // Creating a new command element
     const createCommandElement = (command, itemImageUrl) => {
       const commandItem = document.createElement('div');
       commandItem.className = 'command-item';
