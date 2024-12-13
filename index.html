@@ -133,13 +133,13 @@
         <input type="text" id="itemInput" placeholder="Search and select an item">
         <div class="dropdown-list" id="itemDropdown">
           <div class="dropdown-item" data-value="ammo.pistol">
-            <img src="https://wiki.rustclash.com/img/items180/ammo.pistol.png" alt="Pistol Ammo">Ammo - Pistol
+            <img src="https://gorillaperson.github.io/WaxKitCreator/images/ammo.pistol.png" alt="Pistol Ammo">Ammo - Pistol
           </div>
           <div class="dropdown-item" data-value="wood">
-            <img src="https://wiki.rustclash.com/img/items180/wood.png" alt="Wood">Wood
+            <img src="https://gorillaperson.github.io/WaxKitCreator/images/wood.png" alt="Wood">Wood
           </div>
           <div class="dropdown-item" data-value="metal.fragments">
-            <img src="https://wiki.rustclash.com/img/items180/metal.fragments.png" alt="Metal Fragment">Metal Fragments
+            <img src="https://gorillaperson.github.io/WaxKitCreator/images/metal.fragments.png" alt="Metal Fragments">Metal Fragments
           </div>
           <!-- Add more items with images as needed -->
         </div>
@@ -257,7 +257,7 @@
         return;
       }
 
-      const itemImageUrl = `https://wiki.rustclash.com/img/items180/${item}.png`; // Match with image name
+      const itemImageUrl = `https://gorillaperson.github.io/WaxKitCreator/images/${item}.png`; // Match with image name
       const command = `kit add ${kitName} ${item} ${amount} ${condition} ${container}`;
       clearEmptyMessage();
       const commandElement = createCommandElement(command, itemImageUrl);
