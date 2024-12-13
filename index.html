@@ -275,11 +275,12 @@
     });
 
     itemInput.addEventListener('input', () => {
-      const filter = itemInput.value.toLowerCase();
+      const filter = itemInput.value.toLowerCase().trim(); // Trim the filter text
       const options = Array.from(itemDropdown.querySelectorAll('.dropdown-item'));
       let anyVisible = false;
       options.forEach(option => {
-        if (option.textContent.toLowerCase().includes(filter)) {
+        const itemText = option.textContent.trim().toLowerCase(); // Trim the item text
+        if (itemText.includes(filter)) {
           option.style.display = '';
           anyVisible = true;
         } else {
@@ -291,7 +292,7 @@
 
     itemDropdown.addEventListener('click', (e) => {
       if (e.target.classList.contains('dropdown-item')) {
-        itemInput.value = e.target.textContent;
+        itemInput.value = e.target.textContent.trim(); // Trim the selected item text
         itemInput.dataset.selectedValue = e.target.dataset.value;
         itemDropdown.style.display = 'none';
       }
