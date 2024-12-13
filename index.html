@@ -29,7 +29,7 @@
       margin-bottom: 5px;
       font-weight: bold;
     }
-    input, select, button {
+    input, button {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
@@ -50,6 +50,34 @@
     }
     button:hover {
       background-color: #555;
+    }
+    .dropdown {
+      position: relative;
+      margin-bottom: 15px;
+    }
+    .dropdown input {
+      width: 100%;
+    }
+    .dropdown .dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      max-height: 150px;
+      overflow-y: auto;
+      background-color: #2c2c2c;
+      border: 1px solid #555;
+      border-radius: 5px;
+      z-index: 1000;
+      display: none;
+    }
+    .dropdown .dropdown-list .dropdown-item {
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .dropdown .dropdown-list .dropdown-item:hover {
+      background-color: #444;
     }
     .command-list {
       margin-top: 20px;
@@ -124,12 +152,15 @@
       <input type="text" id="kitName" placeholder="Enter kit name" required>
 
       <label for="item">Item:</label>
-      <select id="item" class="searchable">
-        <option value="ammo.pistol">Ammo - Pistol</option>
-        <option value="wood">Wood</option>
-        <option value="metal.fragments">Metal Fragments</option>
-        <!-- Add more items as needed -->
-      </select>
+      <div class="dropdown">
+        <input type="text" id="itemInput" placeholder="Search and select an item">
+        <div class="dropdown-list" id="itemDropdown">
+          <div class="dropdown-item" data-value="ammo.pistol">Ammo - Pistol</div>
+          <div class="dropdown-item" data-value="wood">Wood</div>
+          <div class="dropdown-item" data-value="metal.fragments">Metal Fragments</div>
+          <!-- Add more items as needed -->
+        </div>
+      </div>
 
       <label for="amount">Amount:</label>
       <input type="number" id="amount" placeholder="Enter amount" required>
@@ -161,7 +192,8 @@
     const commandList = document.getElementById('commandList');
     const emptyMessage = document.getElementById('emptyMessage');
     const copyAllBtn = document.getElementById('copyAllBtn');
-    const itemSelect = document.getElementById('item');
+    const itemInput = document.getElementById('itemInput');
+    const itemDropdown = document.getElementById('itemDropdown');
 
     const clearEmptyMessage = () => {
       emptyMessage.style.display = 'none';
@@ -200,7 +232,7 @@
       editBtn.addEventListener('click', () => {
         const [kitName, item, amount, condition, container] = command.split(' ').slice(2);
         document.getElementById('kitName').value = kitName;
-        document.getElementById('item').value = item;
+        itemInput.value = item;
         document.getElementById('amount').value = amount;
         document.getElementById('condition').value = condition;
         document.getElementById('container').value = container;
@@ -228,7 +260,7 @@
 
     addBtn.addEventListener('click', () => {
       const kitName = document.getElementById('kitName').value.trim();
-      const item = document.getElementById('item').value;
+      const item = itemInput.dataset.selectedValue;
       const amount = document.getElementById('amount').value;
       const condition = document.getElementById('condition').value;
       const container = document.getElementById('container').value;
@@ -239,7 +271,7 @@
         return;
       }
 
-      if (!kitName || !amount || condition === '') {
+      if (!kitName || !item || !amount || condition === '') {
         alert('Please fill in all fields.');
         return;
       }
@@ -261,16 +293,35 @@
     });
 
     // Filter items in the dropdown as the user types
-    itemSelect.addEventListener('input', () => {
-      const filter = itemSelect.value.toLowerCase();
-      const options = Array.from(itemSelect.options);
+    itemInput.addEventListener('input', () => {
+      const filter = itemInput.value.toLowerCase();
+      const options = Array.from(itemDropdown.querySelectorAll('.dropdown-item'));
+      let anyVisible = false;
       options.forEach(option => {
         if (option.textContent.toLowerCase().includes(filter)) {
           option.style.display = '';
+          anyVisible = true;
         } else {
           option.style.display = 'none';
         }
       });
+      itemDropdown.style.display = anyVisible ? 'block' : 'none';
+    });
+
+    // Select item from the dropdown
+    itemDropdown.addEventListener('click', (e) => {
+      if (e.target.classList.contains('dropdown-item')) {
+        itemInput.value = e.target.textContent;
+        itemInput.dataset.selectedValue = e.target.dataset.value;
+        itemDropdown.style.display = 'none';
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.dropdown')) {
+        itemDropdown.style.display = 'none';
+      }
     });
   </script>
 </body>
