@@ -123,6 +123,9 @@
       <label for="kitName">Kit Name:</label>
       <input type="text" id="kitName" placeholder="Enter kit name" required>
 
+      <label for="itemSearch">Search Items:</label>
+      <input type="text" id="itemSearch" placeholder="Search items...">
+
       <label for="item">Item:</label>
       <select id="item">
         <option value="ammo.pistol">Ammo - Pistol</option>
@@ -161,6 +164,8 @@
     const commandList = document.getElementById('commandList');
     const emptyMessage = document.getElementById('emptyMessage');
     const copyAllBtn = document.getElementById('copyAllBtn');
+    const itemSearch = document.getElementById('itemSearch');
+    const itemSelect = document.getElementById('item');
 
     const clearEmptyMessage = () => {
       emptyMessage.style.display = 'none';
@@ -257,6 +262,19 @@
       } else {
         alert('No commands to copy.');
       }
+    });
+
+    // Filter items in the dropdown based on search
+    itemSearch.addEventListener('input', () => {
+      const filter = itemSearch.value.toLowerCase();
+      const options = Array.from(itemSelect.options);
+      options.forEach(option => {
+        if (option.textContent.toLowerCase().includes(filter)) {
+          option.style.display = '';
+        } else {
+          option.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
