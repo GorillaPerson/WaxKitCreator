@@ -69,17 +69,50 @@
       background-color: #333;
       color: #fff;
     }
+    .command-actions {
+      display: flex;
+      gap: 10px;
+    }
     .command-item button {
       width: auto;
       padding: 5px 10px;
-      background-color: #aa4444;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .command-item button:hover {
+    .command-item button.copy {
+      background-color: #4466aa;
+    }
+    .command-item button.copy:hover {
+      background-color: #5588cc;
+    }
+    .command-item button.edit {
+      background-color: #44aa44;
+    }
+    .command-item button.edit:hover {
+      background-color: #55cc55;
+    }
+    .command-item button.remove {
+      background-color: #aa4444;
+    }
+    .command-item button.remove:hover {
       background-color: #cc5555;
+    }
+    .copy-all {
+      display: block;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: #4466aa;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: fit-content;
+    }
+    .copy-all:hover {
+      background-color: #5588cc;
     }
   </style>
 </head>
@@ -121,10 +154,76 @@
     <p id="emptyMessage">No commands added yet.</p>
   </div>
 
+  <button class="copy-all" id="copyAllBtn">Copy All Commands</button>
+
   <script>
     const addBtn = document.getElementById('addBtn');
     const commandList = document.getElementById('commandList');
     const emptyMessage = document.getElementById('emptyMessage');
+    const copyAllBtn = document.getElementById('copyAllBtn');
+
+    const clearEmptyMessage = () => {
+      emptyMessage.style.display = 'none';
+    };
+
+    const showEmptyMessage = () => {
+      if (commandList.querySelectorAll('.command-item').length === 0) {
+        emptyMessage.style.display = 'block';
+      }
+    };
+
+    const createCommandElement = (command) => {
+      const commandItem = document.createElement('div');
+      commandItem.className = 'command-item';
+
+      const commandText = document.createElement('span');
+      commandText.textContent = command;
+      commandText.className = 'command-text';
+
+      const actions = document.createElement('div');
+      actions.className = 'command-actions';
+
+      // Copy Button
+      const copyBtn = document.createElement('button');
+      copyBtn.textContent = 'Copy';
+      copyBtn.className = 'copy';
+      copyBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(command);
+        alert('Command copied to clipboard!');
+      });
+
+      // Edit Button
+      const editBtn = document.createElement('button');
+      editBtn.textContent = 'Edit';
+      editBtn.className = 'edit';
+      editBtn.addEventListener('click', () => {
+        const [kitName, item, amount, condition, container] = command.split(' ').slice(2);
+        document.getElementById('kitName').value = kitName;
+        document.getElementById('item').value = item;
+        document.getElementById('amount').value = amount;
+        document.getElementById('condition').value = condition;
+        document.getElementById('container').value = container;
+        commandItem.remove();
+        showEmptyMessage();
+      });
+
+      // Remove Button
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Remove';
+      removeBtn.className = 'remove';
+      removeBtn.addEventListener('click', () => {
+        commandItem.remove();
+        showEmptyMessage();
+      });
+
+      actions.appendChild(copyBtn);
+      actions.appendChild(editBtn);
+      actions.appendChild(removeBtn);
+      commandItem.appendChild(commandText);
+      commandItem.appendChild(actions);
+
+      return commandItem;
+    };
 
     addBtn.addEventListener('click', () => {
       const kitName = document.getElementById('kitName').value.trim();
@@ -145,36 +244,19 @@
       }
 
       const command = `kit add ${kitName} ${item} ${amount} ${condition} ${container}`;
+      clearEmptyMessage();
+      const commandElement = createCommandElement(command);
+      commandList.appendChild(commandElement);
+    });
 
-      // Hide the empty message if a command is added
-      emptyMessage.style.display = 'none';
-
-      // Create a new command item
-      const commandItem = document.createElement('div');
-      commandItem.className = 'command-item';
-
-      const commandText = document.createElement('span');
-      commandText.textContent = command;
-
-      const removeBtn = document.createElement('button');
-      removeBtn.textContent = 'Remove';
-
-      // Add functionality to remove button
-      removeBtn.addEventListener('click', () => {
-        commandItem.remove();
-
-        // Show empty message if no commands are left
-        if (commandList.querySelectorAll('.command-item').length === 0) {
-          emptyMessage.style.display = 'block';
-        }
-      });
-
-      // Append text and button to the command item
-      commandItem.appendChild(commandText);
-      commandItem.appendChild(removeBtn);
-
-      // Append the command item to the list
-      commandList.appendChild(commandItem);
+    copyAllBtn.addEventListener('click', () => {
+      const commands = Array.from(document.querySelectorAll('.command-text')).map(el => el.textContent).join('\n');
+      if (commands) {
+        navigator.clipboard.writeText(commands);
+        alert('All commands copied to clipboard!');
+      } else {
+        alert('No commands to copy.');
+      }
     });
   </script>
 </body>
